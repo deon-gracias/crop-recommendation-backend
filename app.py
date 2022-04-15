@@ -13,6 +13,8 @@ curr_loc = os.path.dirname(os.path.realpath(__file__))
 fertilizer = pd.read_csv(os.path.realpath(os.path.join(
     curr_loc, "dataset/fertilizer.csv")))
 fertilizer.drop("Unnamed: 0", axis=1, inplace=True)
+crop_recomm = pd.read_csv(os.path.realpath(os.path.join(
+    curr_loc, "dataset/crop_recommendation.csv")))
 
 model = joblib.load(os.path.join(curr_loc, "model.pkl"))
 print("Model loaded")
