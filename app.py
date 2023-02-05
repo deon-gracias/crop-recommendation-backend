@@ -33,8 +33,6 @@ def recommend():
         try:
             reqData = request.json
 
-            print(reqData)
-
             prediction = model.predict(pd.DataFrame([reqData]))
 
             return jsonify({"recommended": list(prediction)})
