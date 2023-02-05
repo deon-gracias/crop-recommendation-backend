@@ -2,9 +2,9 @@ import sys
 import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import xgboost as xgb
 import traceback
 import pandas as pd
-import joblib
 
 app = Flask(__name__)
 CORS(app)
@@ -16,7 +16,9 @@ fertilizer.drop("Unnamed: 0", axis=1, inplace=True)
 crop_recomm = pd.read_csv(os.path.realpath(os.path.join(
     curr_loc, "dataset/crop_recommendation.csv")))
 
-model = joblib.load(os.path.join(curr_loc, "model.pkl"))
+# model = joblib.load(os.path.join(curr_loc, "model.pkl"))
+model = xgb.XGBClassifier()
+model.load_model(os.path.join(curr_loc, "crop-recommendation-model.json"))
 print("Model loaded")
 
 
@@ -30,6 +32,8 @@ def recommend():
     if model:
         try:
             reqData = request.json
+
+            print(reqData)
 
             prediction = model.predict(pd.DataFrame([reqData]))
 
